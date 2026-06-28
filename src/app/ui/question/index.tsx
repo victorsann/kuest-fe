@@ -1,5 +1,5 @@
-import type { QuestionModel } from "../../interfaces/models/question-model";
-import type { UserModel } from "../../interfaces/models/user-model";
+import type { QuestionEntity } from "../../interfaces/entities/question-entity";
+import type { UserEntity } from "../../interfaces/entities/user-entity";
 
 import QuestionBody from "./question-body";
 import QuestionFooter from "./question-footer";
@@ -7,7 +7,7 @@ import QuestionHeader from "./questions-header";
 
 import { Container } from "./styles";
 
-interface Props { question: QuestionModel, user: UserModel }
+interface Props { question: QuestionEntity, user: UserEntity }
 
 const Question = (props: Props) => {
 

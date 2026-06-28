@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import QuestionType from "../../../constants/enum/question_type.enum";
-import AnswerStatusEnum from "../../../constants/enum/answer_status.enum";
-import QuestionAnswer from "../../../constants/enum/question_answer.enum";
+import QuestionTypeEnum from "../../../constants/enum/question-type.enum";
+import AnswerStatusEnum from "../../../constants/enum/answer-status.enum";
+import QuestionAnswerEnum from "../../../constants/enum/question-answer.enum";
 
 import ScissorsSvg from "../../../../assets/svg/icons/scissors";
 
 import type { OptionState } from "../../../interfaces/states/options-state";
-import type { OptionModel } from "../../../interfaces/models/option-model";
+import type { OptionEntity } from "../../../interfaces/entities/option-entity";
 
 import type { QuestionState } from "../../../interfaces/states/question-state";
 
@@ -15,7 +15,7 @@ import { c_dark_green, c_grey_four, c_grey_six, c_grey_three, c_white } from "..
 import { AnswerCheckBox, AnswerKey, OptionContainer, OptionRemoved, OptionRemover, OptionRow, OptionStatement, RightAnswer } from "./styles";
 
 interface Props {
-    option: OptionModel,
+    option: OptionEntity,
     questionState: QuestionState,
     setQuestionState: React.Dispatch<React.SetStateAction<QuestionState>>
 }
@@ -48,7 +48,7 @@ const QuestionOption = (props: Props) => {
         setQuestionState(
             (prevState) => ({
                 ...prevState,
-                userAnswer: option.key as QuestionAnswer
+                userAnswer: option.key as QuestionAnswerEnum
             })
         );
         setOptionState((prevState) => ({ ...prevState, eliminated: false }));
@@ -64,7 +64,7 @@ const QuestionOption = (props: Props) => {
     return (
         <OptionRow>
             <OptionContainer onClick={handleSetQuestionState}>
-                {questionState.question_type == QuestionType.MULTIPLE_CHOICE
+                {questionState.question_type == QuestionTypeEnum.MULTIPLE_CHOICE
                     ? <AnswerKey
                         color={option.key == questionState.userAnswer
                             ? c_white
@@ -93,9 +93,9 @@ const QuestionOption = (props: Props) => {
                     color={optionState.eliminated ? c_grey_four : c_grey_six}
                     textDecoration={optionState.eliminated ? 'line-through' : 'none'}
                 >
-                    {(questionState.question_type == QuestionType.MULTIPLE_CHOICE)
+                    {(questionState.question_type == QuestionTypeEnum.MULTIPLE_CHOICE)
                         ? option.statement
-                        : option.statement == QuestionAnswer.TRUE
+                        : option.statement == QuestionAnswerEnum.TRUE
                             ? 'Certo'
                             : 'Errado'
                     }
@@ -109,7 +109,7 @@ const QuestionOption = (props: Props) => {
                     : null
                 }
             </OptionContainer>
-            {(questionState.question_type == QuestionType.MULTIPLE_CHOICE)
+            {(questionState.question_type == QuestionTypeEnum.MULTIPLE_CHOICE)
                 ? (optionState.key !== questionState.answer || questionState.userAnswer !== questionState.answer && !questionState.answered)
                     ? (!optionState.eliminated)
                         ? <OptionRemover

@@ -1,4 +1,4 @@
-export interface OptionModel {
+export interface OptionEntity {
     key: string,
     statement: string
 }

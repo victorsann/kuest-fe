@@ -1,0 +1,38 @@
+import styled from "styled-components";
+
+export const Container = styled.div<{ backgroundColor?: string }>`
+    display: grid;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: ${(props) => props.backgroundColor};
+`;
+
+export const ProfilePicture = styled.img`
+    height: 35px;
+    width: 35px;
+    border-radius: 50px;
+    overflow: auto;
+`;
+
+export const UserName = styled.text<{ color: string }>`
+    font-size: 12px;
+    color: ${(props) => props.color};
+`;
+
+export const TextStyleOption = styled.text<{
+    color?: string,
+    fontStyle?: string,
+    fontWeight?: string,
+    textDecoration?: string,
+}>`
+    font-size: 13px;
+    font-style: ${(props) => props.fontStyle};
+    font-weight: ${(props) => props.fontWeight};
+    text-decoration: ${(props) => props.textDecoration};
+    color: ${(props) => props.color};
+    &:hover {
+        cursor: pointer;
+    }
+`;
+

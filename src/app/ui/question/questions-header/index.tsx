@@ -2,11 +2,11 @@ import DisplayText from "../../display-text";
 import Row from "../../../components/row_styles";
 import { c_dark_blue, c_grey_six } from "../../../constants/colors";
 
-import type { QuestionModel } from "../../../interfaces/models/question-model";
+import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
 
 import { IdContainer, MetaDataContainer, MetaDataTitle } from "./styles";
 
-interface Props { question: QuestionModel }
+interface Props { question: QuestionEntity }
 
 const QuestionHeader = (props: Props) => {
 

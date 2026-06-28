@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { Container } from "./styles";
 
@@ -10,23 +10,24 @@ import DailyGoal from "../daily-goal";
 import Row from "../../components/row_styles";
 import HeaderUserInfo from "../header-user-info";
 
-import type { UserModel } from "../../interfaces/models/user-model";
+import type { UserEntity } from "../../interfaces/entities/user-entity";
 
-import UserRole from "../../constants/enum/user_role.enum";
+import UserRoleEnum from "../../constants/enum/user-role.enum";
 
 import { c_dark_blue, c_grey_six, c_white } from "../../constants/colors";
 
 const Header = () => {
 
     const location = useLocation();
+    const navigate = useNavigate();
 
-    const user: UserModel = {
+    const user: UserEntity = {
         uid: '',
         name: 'John Doe',
         picture: {
             src: 'https://avatars.githubusercontent.com/u/61476935?v=4&size=64',
         },
-        role: UserRole.ADMIN
+        role: UserRoleEnum.ADMIN
     }
 
     const dailyGoal = {
@@ -38,7 +39,7 @@ const Header = () => {
             <LogoSvg />
             {user ? (
                 <Row gap="20px">
-                    {(user.role == UserRole.STANDARD) ?
+                    {(user.role == UserRoleEnum.STANDARD) ?
                         dailyGoal ? (
                             <DailyGoal
                                 action={() => { }}
@@ -59,15 +60,17 @@ const Header = () => {
             ) : (
                 <Row>
                     <TextButton
-                        to="/signin"
                         text="Criar conta"
-                        isActive={location.pathname == '/signin'}
+                        fontSize="15px"
+                        color={location.pathname == '/signin' ? c_dark_blue : c_grey_six}
+                        onClick={() => navigate('/signin')}
                     />
                     <a style={{ color: c_grey_six }}>&ensp;| &ensp;</a>
                     <TextButton
-                        to="/login"
                         text="Entrar"
-                        isActive={location.pathname == '/login'}
+                        fontSize="15px"
+                        color={location.pathname == '/login' ? c_dark_blue : c_grey_six}
+                        onClick={() => navigate('/login')}
                     />
                 </Row>
             )}

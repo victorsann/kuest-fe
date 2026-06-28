@@ -1,13 +1,13 @@
 
-import Question from "../question";
 import SectionTitle from "../section-title";
 
-import type { UserModel } from "../../interfaces/models/user-model";
-import type { QuestionModel } from "../../interfaces/models/question-model";
+import Question from "../question";
+import type { UserEntity } from "../../interfaces/entities/user-entity";
+import type { QuestionEntity } from "../../interfaces/entities/question-entity";
 
 import { Container, ListContainer } from "./styles";
 
-interface Props { questions: Array<QuestionModel>, user: UserModel }
+interface Props { questions: Array<QuestionEntity>, user: UserEntity }
 
 const QuestionsList = (props: Props) => {
 

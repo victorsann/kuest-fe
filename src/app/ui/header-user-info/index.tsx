@@ -1,10 +1,10 @@
 import Row from "../../components/row_styles";
 import { c_grey_six } from "../../constants/colors";
-import type { UserModel } from "../../interfaces/models/user-model";
+import type { UserEntity } from "../../interfaces/entities/user-entity";
 
 import { ProfilePicture, UserName } from "./styles";
 
-interface Props { user: UserModel }
+interface Props { user: UserEntity }
 
 const HeaderUserInfo = (props: Props) => {
     return (

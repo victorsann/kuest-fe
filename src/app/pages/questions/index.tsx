@@ -8,30 +8,30 @@ import { c_dark_blue, c_grey_six, c_white } from "../../constants/colors";
 import PlusSvg from "../../../assets/svg/icons/plus";
 import FilterSvg from "../../../assets/svg/icons/filter";
 
-import type { UserModel } from "../../interfaces/models/user-model";
-import type { QuestionModel } from "../../interfaces/models/question-model";
+import type { UserEntity } from "../../interfaces/entities/user-entity";
+import type { QuestionEntity } from "../../interfaces/entities/question-entity";
 
 import Filter from "../../ui/filter";
 import QuestionsList from "../../ui/questions-list";
 
-import UserRole from "../../constants/enum/user_role.enum";
-import QuestionType from "../../constants/enum/question_type.enum";
-import QuestionAnswer from "../../constants/enum/question_answer.enum";
+import UserRoleEnum from "../../constants/enum/user-role.enum";
+import QuestionTypeEnum from "../../constants/enum/question-type.enum";
+import QuestionAnswerEnum from "../../constants/enum/question-answer.enum";
 
 import { TitleSection } from "./styles";
 
 const QuestionsPage = () => {
 
-    const user: UserModel = {
+    const user: UserEntity = {
         uid: '',
         name: 'John Doe',
         picture: {
             src: 'https://avatars.githubusercontent.com/u/61476935?v=4&size=64',
         },
-        role: UserRole.ADMIN
+        role: UserRoleEnum.ADMIN
     }
 
-    const questions: Array<QuestionModel> = [
+    const questions: Array<QuestionEntity> = [
         {
             uuid: 'k4037557',
             year: 2026,
@@ -46,8 +46,8 @@ const QuestionsPage = () => {
             ],
             prompt: 'Para que o valor do imóvel retorne exatamente ao patamar que possuía antes do primeiro desses dois reajustes, o novo valor atualizado deve sofrer um desconto único de:',
             statement: 'O valor venal de um imóvel para fins de cálculo tributário municipal sofreu dois aumentos sucessivos de 25% cada em um determinado biênio.',
-            answer: QuestionAnswer.A,
-            question_type: QuestionType.MULTIPLE_CHOICE,
+            answer: QuestionAnswerEnum.A,
+            question_type: QuestionTypeEnum.MULTIPLE_CHOICE,
             numberOfComments: 0,
             subject: {
                 id: '1',
@@ -66,8 +66,8 @@ const QuestionsPage = () => {
             options: [],
             prompt: 'Julgue o próximo item, relativo ao Microsoft Office, à Política Nacional de Educação Digital (PNED), bem como a inteligência artificial generativa (IAG), a ameaças digitais e ao Portal Brasileiro de Dados Abertos.',
             statement: 'O pharming é uma variante do phishing, pois redireciona o browser do usuário para um site falso, visando roubar identidade digital e informação sensível.',
-            answer: QuestionAnswer.TRUE,
-            question_type: QuestionType.TRUE_OR_FALSE,
+            answer: QuestionAnswerEnum.TRUE,
+            question_type: QuestionTypeEnum.TRUE_OR_FALSE,
             numberOfComments: 10,
             subject: {
                 id: '2',
@@ -87,7 +87,7 @@ const QuestionsPage = () => {
                     title="Questões"
                     buttons={
                         <Row gap="10px">
-                            {(user.role == UserRole.ADMIN) ?
+                            {(user.role == UserRoleEnum.ADMIN) ?
                                 <SquareButton
                                     text="Criar"
                                     isActive={true}

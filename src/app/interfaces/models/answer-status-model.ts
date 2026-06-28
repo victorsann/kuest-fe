@@ -1,4 +1,4 @@
-import type AnswerStatusEnum from "../../constants/enum/answer_status.enum";
+import type AnswerStatusEnum from "../../constants/enum/answer-status.enum";
 
 export interface AnswerStatusModel {
     status: AnswerStatusEnum,

@@ -1,9 +1,9 @@
-import type QuestionAnswer from "../../constants/enum/question_answer.enum";
+import type QuestionAnswerEnum from "../../constants/enum/question-answer.enum";
 import type { AnswerStatusModel } from "../models/answer-status-model";
-import type { QuestionModel } from "../models/question-model";
+import type { QuestionEntity } from "../entities/question-entity";
 
-export interface QuestionState extends QuestionModel {
+export interface QuestionState extends QuestionEntity {
     answered: boolean,
-    userAnswer: QuestionAnswer,
+    userAnswer: QuestionAnswerEnum,
     answerStatus: AnswerStatusModel
 }

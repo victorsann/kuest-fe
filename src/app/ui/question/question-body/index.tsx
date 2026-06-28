@@ -2,20 +2,20 @@ import { useEffect, useState } from "react";
 
 import { c_dark_blue, c_dark_green, c_dark_red, c_grey_six, c_white } from "../../../constants/colors";
 
-import type { QuestionModel } from "../../../interfaces/models/question-model";
+import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
 import type { QuestionState } from "../../../interfaces/states/question-state";
-import type { OptionModel } from "../../../interfaces/models/option-model";
+import type { OptionEntity } from "../../../interfaces/entities/option-entity";
 
 import QuestionOption from "../question-option";
 import SquareButton from "../../button/square-button";
 
-import QuestionType from "../../../constants/enum/question_type.enum";
-import QuestionAnswer from "../../../constants/enum/question_answer.enum";
-import AnswerStatusEnum from "../../../constants/enum/answer_status.enum";
+import QuestionTypeEnum from "../../../constants/enum/question-type.enum";
+import QuestionAnswerEnum from "../../../constants/enum/question-answer.enum";
+import AnswerStatusEnum from "../../../constants/enum/answer-status.enum";
 
 import { Container, Statement, Prompt, OptionsContainer, AnswerStatus, AnswerRow } from "./styles";
 
-interface Props { question: QuestionModel }
+interface Props { question: QuestionEntity }
 
 const QuestionBody = (props: Props) => {
 
@@ -24,11 +24,11 @@ const QuestionBody = (props: Props) => {
     const [questionState, setQuestionState] = useState<QuestionState>({
         ...question,
         answered: false,
-        userAnswer: QuestionAnswer.NONE,
+        userAnswer: QuestionAnswerEnum.NONE,
         answerStatus: { color: '', statement: '', status: AnswerStatusEnum.NONE },
     });
 
-    const trueOrFalse: Array<OptionModel> = [
+    const trueOrFalse: Array<OptionEntity> = [
         { key: 'TRUE', statement: 'TRUE' },
         { key: 'FALSE', statement: 'FALSE' },
     ];
@@ -73,7 +73,7 @@ const QuestionBody = (props: Props) => {
             <Statement fontSize="13px" color={c_grey_six}>{question.statement}</Statement>
             <Prompt fontSize="13px" color={c_grey_six}>{question.prompt}</Prompt>
             <OptionsContainer>
-                {(questionState.question_type == QuestionType.MULTIPLE_CHOICE)
+                {(questionState.question_type == QuestionTypeEnum.MULTIPLE_CHOICE)
                     ? question.options.map((item) => <QuestionOption
                         option={item}
                         questionState={questionState}
@@ -90,11 +90,11 @@ const QuestionBody = (props: Props) => {
                         color={c_white}
                         text="Responder"
                         backgroundColor={c_dark_blue}
-                        isActive={(questionState.userAnswer == QuestionAnswer.NONE || questionState.answered)
+                        isActive={(questionState.userAnswer == QuestionAnswerEnum.NONE || questionState.answered)
                             ? false
                             : true
                         }
-                        onClick={questionState.userAnswer !== QuestionAnswer.NONE
+                        onClick={questionState.userAnswer !== QuestionAnswerEnum.NONE
                             ? handleSetUserAnswer
                             : null
                         }

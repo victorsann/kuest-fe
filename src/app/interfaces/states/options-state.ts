@@ -1,6 +1,6 @@
-import type { OptionModel } from "../models/option-model";
+import type { OptionEntity } from "../entities/option-entity";
 
-export interface OptionState extends OptionModel {
+export interface OptionState extends OptionEntity {
     eliminated: boolean,
     showRightAnswer: boolean
 }
