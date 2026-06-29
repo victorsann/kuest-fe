@@ -19,16 +19,16 @@ interface Props {
     user: UserEntity,
     comment: CommentEntity,
     reply: CommentReplyEntity,
-    setComment: React.Dispatch<React.SetStateAction<CommentEntity>>
+    setCommentState: React.Dispatch<React.SetStateAction<CommentEntity>>
 }
 
 const CommentReply = (props: Props) => {
 
-    const { reply, user } = props;
+    const { reply, user, comment, setCommentState } = props;
 
     const [isEditing, setIsEditing] = useState(false);
 
-    const [newComment, setNewComment] = useState(reply.text);
+    const [editedReply, setEditedReply] = useState(reply.text);
     const [textStyle, setTextStyle] = useState<Array<TextSyleEnum>>([]);
 
     const textStyleOptions: Array<TextStyleModel> = [
@@ -56,7 +56,21 @@ const CommentReply = (props: Props) => {
         );
     }
 
-    const handleSetNewComment = () => {
+    const handleEditReply = () => {
+
+        const index = comment.replies.indexOf(reply);
+
+        const editedReplyContent: CommentReplyEntity = {
+            athor: reply.athor,
+            date: reply.date,
+            text: editedReply
+        }
+
+        setCommentState((prevState) => ({
+            ...prevState,
+            replies: comment.replies.with(index, editedReplyContent)
+        }));
+
         setIsEditing(false);
     }
 
@@ -76,9 +90,9 @@ const CommentReply = (props: Props) => {
             </Row>
             {(isEditing)
                 ? <TextInput
-                    value={newComment}
+                    value={editedReply}
                     placeholder="Escreva um comentário..."
-                    onChange={(_text) => setNewComment(_text)}
+                    onChange={(_text) => setEditedReply(_text)}
                 />
                 : <CommentText color={c_grey_six}>{reply.text}</CommentText>
             }
@@ -113,7 +127,7 @@ const CommentReply = (props: Props) => {
                             fontSize="12px"
                             text={'Salvar'}
                             color={c_grey_six}
-                            onClick={handleSetNewComment}
+                            onClick={handleEditReply}
                         />
                     </Row>
                     : <TextButton

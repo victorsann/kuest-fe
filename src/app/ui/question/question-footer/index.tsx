@@ -80,11 +80,18 @@ const QuestionFooter = (props: Props) => {
                 </Row>
             </Container>
             {(questionOptionState == QuestionOptionsEnum.COMMENTS)
-                ? <QuestionComments user={user} setQuestionActionState={setQuestionOptionState} />
+                ? <QuestionComments
+                    user={user}
+                    question={question}
+                    setQuestionActionState={setQuestionOptionState}
+                />
                 : null
             }
             {(questionOptionState == QuestionOptionsEnum.ANSWER)
-                ? <QuestionAnswer setQuestionActionState={setQuestionOptionState} />
+                ? <QuestionAnswer
+                    question={question}
+                    setQuestionActionState={setQuestionOptionState}
+                />
                 : null
             }
         </>

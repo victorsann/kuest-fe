@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { c_dark_blue, c_dark_red, c_grey_six, c_white } from "../../../../constants/colors";
 
 import CommentReplies from "../comment-replies";
@@ -8,37 +8,48 @@ import TextButton from "../../../button/text-button";
 import type { UserEntity } from "../../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../../interfaces/entities/comment-entity";
 
+import TextSyleEnum from "../../../../constants/enum/text-style.enum";
 import CommentOptionsEnum from "../../../../constants/enum/comments-options-enum";
 
+import type { TextStyleModel } from "../../../../interfaces/models/text-style-model";
 import type { CommentOptionModel } from "../../../../interfaces/models/comments-option-model";
 
-import { CommentDate, CommentText, Container, ProfilePicture, TextStyleOption, UserName } from "./styles";
 import TextInput from "../../../text-input";
-import TextSyleEnum from "../../../../constants/enum/text-style.enum";
-import type { TextStyleModel } from "../../../../interfaces/models/text-style-model";
 
-interface Props { comment: CommentEntity, user: UserEntity }
+import { CommentDate, CommentText, Container, ProfilePicture, TextStyleOption, UserName } from "./styles";
+import type { EditCommentModel } from "../../../../interfaces/models/edit-comment-model";
+
+interface Props {
+    user: UserEntity,
+    comment: CommentEntity,
+    callBack: (comment: EditCommentModel) => void
+}
 
 const Comment = (props: Props) => {
 
-    const { user } = props;
+    const { user, comment, callBack } = props;
 
-    const [comment, setComment] = useState(props.comment);
+    const [commentState, setCommentState] = useState<CommentEntity>(props.comment);
     const [showReplies, setShowReplies] = useState(false);
+
+    // Used to update comments after editting
+    useEffect(() => {
+        setCommentState(props.comment);
+    }, [comment]);
 
     const commentOptions: Array<CommentOptionModel> = [
         {
-            title: `Curtidas (${comment.numberOfLikes})`,
+            title: `Curtidas (${commentState.numberOfLikes})`,
             type: CommentOptionsEnum.LIKE,
-            action: () => setComment((prevState) => ({
+            action: () => setCommentState((prevState) => ({
                 ...prevState,
-                numberOfLikes: (comment.numberOfLikes > props.comment.numberOfLikes)
-                    ? comment.numberOfLikes - 1
-                    : comment.numberOfLikes + 1
+                numberOfLikes: (commentState.numberOfLikes > props.comment.numberOfLikes)
+                    ? commentState.numberOfLikes - 1
+                    : commentState.numberOfLikes + 1
             })),
         },
         {
-            title: `Respostas (${comment.numberOfReplies})`,
+            title: `Respostas (${commentState.numberOfReplies})`,
             type: CommentOptionsEnum.REPLIES,
             action: () => setShowReplies(!showReplies)
         }
@@ -59,7 +70,7 @@ const Comment = (props: Props) => {
     // Editing related
 
     const [isEditing, setIsEditing] = useState(false);
-    const [newComment, setNewComment] = useState(comment.text);
+    const [editedComment, setEditedComment] = useState(commentState.text);
 
     const [textStyle, setTextStyle] = useState<Array<TextSyleEnum>>([]);
 
@@ -88,7 +99,8 @@ const Comment = (props: Props) => {
         );
     }
 
-    const handleSetNewComment = () => {
+    const handleEditComment = () => {
+        callBack({ comment: comment, editedComment: editedComment })
         setIsEditing(false);
     }
 
@@ -109,11 +121,11 @@ const Comment = (props: Props) => {
                 </Row>
                 {(isEditing)
                     ? <TextInput
-                        value={newComment}
+                        value={editedComment}
                         placeholder="Escreva um comentário..."
-                        onChange={(_text) => setNewComment(_text)}
+                        onChange={(_text) => setEditedComment(_text)}
                     />
-                    : <CommentText color={c_grey_six}>{comment.text}</CommentText>
+                    : <CommentText color={c_grey_six}>{commentState.text}</CommentText>
                 }
                 <Row>
                     {(isEditing)
@@ -157,20 +169,26 @@ const Comment = (props: Props) => {
                                 fontSize="12px"
                                 text={'Salvar'}
                                 color={c_grey_six}
-                                onClick={handleSetNewComment}
+                                onClick={handleEditComment}
                             />
                         </Row>
                         : <TextButton
                             fontSize="12px"
                             color={c_grey_six}
-                            text={comment.athor.uid == user.uid ? 'Editar' : 'Reportar'}
-                            onClick={() => comment.athor.uid == user.uid ? setIsEditing(!isEditing) : null}
+                            text={commentState.athor.uid == user.uid ? 'Editar' : 'Reportar'}
+                            onClick={() => commentState.athor.uid == user.uid
+                                ? setIsEditing(!isEditing) : null
+                            }
                         />
                     }
                 </Row>
             </Container>
             {(showReplies)
-                ? <CommentReplies user={user} comment={comment} setComment={setComment} />
+                ? <CommentReplies
+                    user={user}
+                    comment={commentState}
+                    setCommentState={setCommentState}
+                />
                 : null
             }
         </>

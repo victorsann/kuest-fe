@@ -1,5 +1,6 @@
 import type { UserEntity } from "../../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../../interfaces/entities/comment-entity";
+import type { CommentReplyEntity } from "../../../../interfaces/entities/comment-reply-entity";
 
 import CommentInput from "../comment-input";
 import CommentReply from "../comment-reply";
@@ -9,12 +10,25 @@ import { Container } from "./styles";
 interface Props {
     user: UserEntity,
     comment: CommentEntity,
-    setComment: React.Dispatch<React.SetStateAction<CommentEntity>>
+    setCommentState: React.Dispatch<React.SetStateAction<CommentEntity>>
 }
 
 const CommentReplies = (props: Props) => {
 
-    const { comment, setComment, user } = props;
+    const { comment, setCommentState, user } = props;
+
+    const handleSetNewReply = (reply: string) => {
+        const newReply: CommentReplyEntity = {
+            text: reply,
+            date: new Date().toISOString(),
+            athor: { uid: user.uid, name: user.name, picture: user.picture }
+        }
+        setCommentState((prevState) => ({
+            ...prevState,
+            replies: [...comment.replies, newReply],
+            numberOfReplies: comment.numberOfReplies + 1
+        }));
+    }
 
     return (
         <Container>
@@ -23,10 +37,10 @@ const CommentReplies = (props: Props) => {
                     user={user}
                     reply={item}
                     comment={comment}
-                    setComment={setComment}
+                    setCommentState={setCommentState}
                 />
             ))}
-            <CommentInput user={user} callBack={(c) => console.log(c)} />
+            <CommentInput user={user} callBack={(_reply) => handleSetNewReply(_reply)} />
         </Container>
     );
 }

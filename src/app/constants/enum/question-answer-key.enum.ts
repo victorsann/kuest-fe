@@ -1,4 +1,4 @@
-enum QuestionAnswerEnum {
+enum QuestionAnswerKeyEnum {
     A = 'A',
     B = 'B',
     C = 'C',
@@ -9,4 +9,4 @@ enum QuestionAnswerEnum {
     NONE = 'NONE'
 }
 
-export default QuestionAnswerEnum;
+export default QuestionAnswerKeyEnum;

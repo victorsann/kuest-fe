@@ -5,6 +5,8 @@ import type QuestionActionsEnum from "../../../constants/enum/question-options.e
 
 import type { UserEntity } from "../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../interfaces/entities/comment-entity";
+import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
+import type { EditCommentModel } from "../../../interfaces/models/edit-comment-model";
 
 import CommentInput from "./comment-input";
 import CommentsList from "./comments-list";
@@ -13,6 +15,7 @@ import { Container } from "./styles";
 
 interface Props {
     user: UserEntity,
+    question: QuestionEntity,
     setQuestionActionState: React.Dispatch<React.SetStateAction<QuestionActionsEnum>>
 }
 
@@ -36,7 +39,7 @@ const QuestionComments = (props: Props) => {
                 },
                 date: '2015-03-25T12:00:00Z',
                 text: 'Bla bla bla',
-                numberOfLikes: 0,
+                numberOfLikes: 10,
                 numberOfReplies: 1,
                 replies: [
                     {
@@ -82,10 +85,45 @@ const QuestionComments = (props: Props) => {
         ]);
     }
 
+    const handleSetNewComment = (comment: string) => {
+        const newComment: CommentEntity = {
+            text: comment,
+            athor: {
+                uid: user.uid,
+                name: user.name,
+                picture: user.picture
+            },
+            date: new Date().toISOString(),
+            numberOfLikes: 0,
+            numberOfReplies: 0,
+            replies: [],
+        }
+        setComments([...comments, newComment]);
+    }
+
+    const handleEditComment = (params: EditCommentModel) => {
+        const index = comments.indexOf(
+            params.comment
+        );
+        const editedCommentContent: CommentEntity = {
+            athor: params.comment.athor,
+            date: params.comment.date,
+            numberOfLikes: params.comment.numberOfLikes,
+            numberOfReplies: params.comment.numberOfReplies,
+            replies: params.comment.replies,
+            text: params.editedComment
+        }
+        setComments(comments.with(index, editedCommentContent));
+    }
+
     return (
         <Container backgroundColor={c_grey_two}>
-            <CommentsList comments={comments} user={user} />
-            <CommentInput user={user} callBack={(c) => console.log(c)} />
+            <CommentsList
+                user={user}
+                comments={comments}
+                callBack={(_comment) => handleEditComment(_comment)}
+            />
+            <CommentInput user={user} callBack={(_comment) => handleSetNewComment(_comment)} />
         </Container>
     );
 }

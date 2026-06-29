@@ -10,7 +10,7 @@ import QuestionOption from "../question-option";
 import SquareButton from "../../button/square-button";
 
 import QuestionTypeEnum from "../../../constants/enum/question-type.enum";
-import QuestionAnswerEnum from "../../../constants/enum/question-answer.enum";
+import QuestionAnswerKeyEnum from "../../../constants/enum/question-answer-key.enum";
 import AnswerStatusEnum from "../../../constants/enum/answer-status.enum";
 
 import { Container, Statement, Prompt, OptionsContainer, AnswerStatus, AnswerRow } from "./styles";
@@ -24,7 +24,7 @@ const QuestionBody = (props: Props) => {
     const [questionState, setQuestionState] = useState<QuestionState>({
         ...question,
         answered: false,
-        userAnswer: QuestionAnswerEnum.NONE,
+        userAnswer: QuestionAnswerKeyEnum.NONE,
         answerStatus: { color: '', statement: '', status: AnswerStatusEnum.NONE },
     });
 
@@ -47,7 +47,7 @@ const QuestionBody = (props: Props) => {
     })), [questionState.userAnswer]);
 
     const handleSetUserAnswer = () => {
-        if (questionState.userAnswer === questionState.answer) {
+        if (questionState.userAnswer === questionState.answer.key) {
             setQuestionState((prevState) => ({
                 ...prevState,
                 answerStatus: {
@@ -90,11 +90,11 @@ const QuestionBody = (props: Props) => {
                         color={c_white}
                         text="Responder"
                         backgroundColor={c_dark_blue}
-                        isActive={(questionState.userAnswer == QuestionAnswerEnum.NONE || questionState.answered)
+                        isActive={(questionState.userAnswer == QuestionAnswerKeyEnum.NONE || questionState.answered)
                             ? false
                             : true
                         }
-                        onClick={questionState.userAnswer !== QuestionAnswerEnum.NONE
+                        onClick={questionState.userAnswer !== QuestionAnswerKeyEnum.NONE
                             ? handleSetUserAnswer
                             : null
                         }

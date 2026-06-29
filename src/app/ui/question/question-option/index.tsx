@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import QuestionTypeEnum from "../../../constants/enum/question-type.enum";
 import AnswerStatusEnum from "../../../constants/enum/answer-status.enum";
-import QuestionAnswerEnum from "../../../constants/enum/question-answer.enum";
+import QuestionAnswerKeyEnum from "../../../constants/enum/question-answer-key.enum";
 
 import ScissorsSvg from "../../../../assets/svg/icons/scissors";
 
@@ -48,7 +48,7 @@ const QuestionOption = (props: Props) => {
         setQuestionState(
             (prevState) => ({
                 ...prevState,
-                userAnswer: option.key as QuestionAnswerEnum
+                userAnswer: option.key as QuestionAnswerKeyEnum
             })
         );
         setOptionState((prevState) => ({ ...prevState, eliminated: false }));
@@ -95,14 +95,14 @@ const QuestionOption = (props: Props) => {
                 >
                     {(questionState.question_type == QuestionTypeEnum.MULTIPLE_CHOICE)
                         ? option.statement
-                        : option.statement == QuestionAnswerEnum.TRUE
+                        : option.statement == QuestionAnswerKeyEnum.TRUE
                             ? 'Certo'
                             : 'Errado'
                     }
                 </OptionStatement>
                 {(
                     optionState.showRightAnswer &&
-                    option.key == questionState.answer &&
+                    option.key == questionState.answer.key &&
                     questionState.answerStatus?.status == AnswerStatusEnum.INCORRECT
                 )
                     ? <RightAnswer color={c_dark_green}>Gabarito</RightAnswer>
@@ -110,7 +110,7 @@ const QuestionOption = (props: Props) => {
                 }
             </OptionContainer>
             {(questionState.question_type == QuestionTypeEnum.MULTIPLE_CHOICE)
-                ? (optionState.key !== questionState.answer || questionState.userAnswer !== questionState.answer && !questionState.answered)
+                ? (optionState.key !== questionState.answer.key || questionState.userAnswer !== questionState.answer.key && !questionState.answered)
                     ? (!optionState.eliminated)
                         ? <OptionRemover
                             onClick={handleSetEliminated}

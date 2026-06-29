@@ -16,7 +16,7 @@ import QuestionsList from "../../ui/questions-list";
 
 import UserRoleEnum from "../../constants/enum/user-role.enum";
 import QuestionTypeEnum from "../../constants/enum/question-type.enum";
-import QuestionAnswerEnum from "../../constants/enum/question-answer.enum";
+import QuestionAnswerKeyEnum from "../../constants/enum/question-answer-key.enum";
 
 import { TitleSection } from "./styles";
 
@@ -46,7 +46,11 @@ const QuestionsPage = () => {
             ],
             prompt: 'Para que o valor do imóvel retorne exatamente ao patamar que possuía antes do primeiro desses dois reajustes, o novo valor atualizado deve sofrer um desconto único de:',
             statement: 'O valor venal de um imóvel para fins de cálculo tributário municipal sofreu dois aumentos sucessivos de 25% cada em um determinado biênio.',
-            answer: QuestionAnswerEnum.A,
+            answer: {
+                reason: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since 1966, when designers at Letraset and James Mosley, the librarian at St Bride Printing Library in London, took a 1914 Cicero translation and scrambled it to make dummy text for Letraset\'s Body Type sheets.It has survived not only many decades, but also the leap into electronic typesetting, remaining essentially unchanged.It was popularised thanks to these sheets and more recently with desktop publishing software like Aldus PageMaker and Microsoft Word including versions of Lorem Ipsum.',
+                numberOfLikes: 10,
+                key: QuestionAnswerKeyEnum.A,
+            },
             question_type: QuestionTypeEnum.MULTIPLE_CHOICE,
             numberOfComments: 0,
             subject: {
@@ -66,7 +70,11 @@ const QuestionsPage = () => {
             options: [],
             prompt: 'Julgue o próximo item, relativo ao Microsoft Office, à Política Nacional de Educação Digital (PNED), bem como a inteligência artificial generativa (IAG), a ameaças digitais e ao Portal Brasileiro de Dados Abertos.',
             statement: 'O pharming é uma variante do phishing, pois redireciona o browser do usuário para um site falso, visando roubar identidade digital e informação sensível.',
-            answer: QuestionAnswerEnum.TRUE,
+            answer: {
+                reason: 'teste',
+                numberOfLikes: 10,
+                key: QuestionAnswerKeyEnum.TRUE,
+            },
             question_type: QuestionTypeEnum.TRUE_OR_FALSE,
             numberOfComments: 10,
             subject: {
