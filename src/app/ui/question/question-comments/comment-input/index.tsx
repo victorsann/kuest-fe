@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { c_dark_blue, c_grey_six, c_white } from "../../../../constants/colors";
 
@@ -15,7 +15,7 @@ import { Container, ProfilePicture, TextStyleOption, UserName } from "./styles";
 
 interface Props {
     user: UserEntity,
-    callBack: (comment: string) => void,
+    callBack: (comment: string) => void
 }
 
 const CommentInput = (props: Props) => {
@@ -50,9 +50,16 @@ const CommentInput = (props: Props) => {
     }
 
     const [comment, setComment] = useState('');
+    const [commentChanged, setCommentChanged] = useState(false);
+
+    useEffect(() => comment.trim() != ''
+        ? setCommentChanged(true)
+        : setCommentChanged(false), [comment]
+    );
 
     const handleSetComment = () => {
         callBack(comment);
+        setTextStyle([]);
         setComment('');
     }
 
@@ -91,7 +98,8 @@ const CommentInput = (props: Props) => {
                 <TextButton
                     text="Comentar"
                     color={c_grey_six}
-                    onClick={handleSetComment}
+                    inActive={commentChanged}
+                    onClick={(commentChanged) ? handleSetComment : () => { }}
                 />
             </Row>
         </Container>

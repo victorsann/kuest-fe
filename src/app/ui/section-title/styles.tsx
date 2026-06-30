@@ -7,8 +7,13 @@ export const Title = styled.text<{ color: string }>`
     color: ${(props) => props.color}
 `;
 
-export const Subtitle = styled.text<{ color: string }>`
+export const Subtitle = styled.div<{ color: string }>`
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
     font-size: 15px;
     font-weight: ${medium};
     color: ${(props) => props.color}
 `;
+
+

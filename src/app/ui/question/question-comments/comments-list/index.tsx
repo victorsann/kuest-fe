@@ -22,7 +22,11 @@ const CommentsList = (props: Props) => {
     return (
         <Container backgroundColor={c_grey_two}>
             {comments.map((item) =>
-                <Comment user={user} comment={item} callBack={callBack} />
+                <Comment
+                    user={user}
+                    comment={item}
+                    callBack={callBack}
+                />
             )}
             {comments.length > 10
                 ? <SquareButton

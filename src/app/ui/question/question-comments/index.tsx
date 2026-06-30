@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { c_grey_two } from "../../../constants/colors";
 
 import type QuestionActionsEnum from "../../../constants/enum/question-options.enum";
+import type { EditQuestionModel } from "../../../interfaces/models/endit-question-model";
 
 import type { UserEntity } from "../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../interfaces/entities/comment-entity";
@@ -12,16 +13,18 @@ import CommentInput from "./comment-input";
 import CommentsList from "./comments-list";
 
 import { Container } from "./styles";
+import UserRoleEnum from "../../../constants/enum/user-role.enum";
 
 interface Props {
     user: UserEntity,
     question: QuestionEntity,
+    questionCallBack: (params: EditQuestionModel) => void
     setQuestionActionState: React.Dispatch<React.SetStateAction<QuestionActionsEnum>>
 }
 
 const QuestionComments = (props: Props) => {
 
-    const { user } = props;
+    const { user, question, questionCallBack } = props;
 
     const [comments, setComments] = useState<Array<CommentEntity>>([]);
 
@@ -31,23 +34,23 @@ const QuestionComments = (props: Props) => {
         setComments([
             {
                 athor: {
-                    uid: '',
-                    name: 'John Doe',
+                    uid: '1',
+                    name: 'Kid Named Finger',
                     picture: {
-                        src: 'https://avatars.githubusercontent.com/u/61476935?v=4&size=64',
+                        src: 'https://i.scdn.co/image/ab67616d00001e020b6deb6b039d4481823b3c8d'
                     },
                 },
                 date: '2015-03-25T12:00:00Z',
                 text: 'Bla bla bla',
-                numberOfLikes: 10,
+                numberOfLikes: 0,
                 numberOfReplies: 1,
                 replies: [
                     {
                         athor: {
-                            uid: '',
-                            name: 'John Doe',
+                            uid: '1',
+                            name: 'Kid Named Finger',
                             picture: {
-                                src: 'https://avatars.githubusercontent.com/u/61476935?v=4&size=64',
+                                src: 'https://i.scdn.co/image/ab67616d00001e020b6deb6b039d4481823b3c8d'
                             }
                         },
                         date: '2015-03-25T12:00:00Z',
@@ -56,32 +59,6 @@ const QuestionComments = (props: Props) => {
 
                 ],
             },
-            {
-                athor: {
-                    uid: '',
-                    name: 'John Doe',
-                    picture: {
-                        src: 'https://avatars.githubusercontent.com/u/61476935?v=4&size=64',
-                    },
-                },
-                date: '2015-03-25T12:00:00Z',
-                text: 'Bla bla bla',
-                numberOfLikes: 1,
-                numberOfReplies: 1,
-                replies: [
-                    {
-                        athor: {
-                            uid: '',
-                            name: 'John Doe',
-                            picture: {
-                                src: 'https://avatars.githubusercontent.com/u/61476935?v=4&size=64',
-                            }
-                        },
-                        date: '2015-03-25T12:00:00Z',
-                        text: 'Bla bla bla'
-                    }
-                ],
-            }
         ]);
     }
 
@@ -99,6 +76,7 @@ const QuestionComments = (props: Props) => {
             replies: [],
         }
         setComments([...comments, newComment]);
+        questionCallBack({ question: question }); // update question
     }
 
     const handleEditComment = (params: EditCommentModel) => {
@@ -123,7 +101,13 @@ const QuestionComments = (props: Props) => {
                 comments={comments}
                 callBack={(_comment) => handleEditComment(_comment)}
             />
-            <CommentInput user={user} callBack={(_comment) => handleSetNewComment(_comment)} />
+            {(user.role == UserRoleEnum.STANDARD)
+                ? <CommentInput
+                    user={user}
+                    callBack={(_reply) => handleSetNewComment(_reply)}
+                />
+                : null
+            }
         </Container>
     );
 }

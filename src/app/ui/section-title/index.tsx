@@ -6,14 +6,16 @@ import { Subtitle, Title } from "./styles";
 
 interface Props {
     title: string,
-    subtitle?: string
+    children?: Array<any>
 }
 
 const SectionTitle = (props: Props) => {
     return (
         <Row>
             <Title color={c_grey_six}>{props.title}</Title>
-            <Subtitle color={c_grey_six}>{props.subtitle}</Subtitle>
+            <Subtitle color={c_grey_six}>
+                {props.children}
+            </Subtitle>
         </Row>
     );
 };

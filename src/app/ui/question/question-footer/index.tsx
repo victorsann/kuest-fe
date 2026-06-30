@@ -6,6 +6,7 @@ import type { QuestionEntity } from "../../../interfaces/entities/question-entit
 import type { UserEntity } from "../../../interfaces/entities/user-entity";
 
 import type { QuestionOptionModel } from "../../../interfaces/models/question-option-model";
+import type { EditQuestionModel } from "../../../interfaces/models/endit-question-model";
 
 import QuestionOptionsEnum from "../../../constants/enum/question-options.enum";
 import UserRoleEnum from "../../../constants/enum/user-role.enum";
@@ -17,11 +18,15 @@ import QuestionComments from "../question-comments";
 
 import { Container, FooterOption, FooterOptionLabel } from "./styles";
 
-interface Props { question: QuestionEntity, user: UserEntity }
+interface Props {
+    user: UserEntity,
+    question: QuestionEntity,
+    questionCallBack: (params: EditQuestionModel) => void
+}
 
 const QuestionFooter = (props: Props) => {
 
-    const { question, user } = props;
+    const { user, question, questionCallBack } = props;
 
     const questionOptions: Array<QuestionOptionModel> = [
         {
@@ -72,7 +77,7 @@ const QuestionFooter = (props: Props) => {
                         />
                         : <TextButton
                             fontSize="12px"
-                            text={'Responder'}
+                            text={'Reportar'}
                             color={c_grey_six}
                             onClick={() => { }}
                         />
@@ -83,6 +88,7 @@ const QuestionFooter = (props: Props) => {
                 ? <QuestionComments
                     user={user}
                     question={question}
+                    questionCallBack={questionCallBack}
                     setQuestionActionState={setQuestionOptionState}
                 />
                 : null

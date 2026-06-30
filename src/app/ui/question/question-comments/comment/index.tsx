@@ -8,16 +8,17 @@ import TextButton from "../../../button/text-button";
 import type { UserEntity } from "../../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../../interfaces/entities/comment-entity";
 
+import UserRoleEnum from "../../../../constants/enum/user-role.enum";
 import TextSyleEnum from "../../../../constants/enum/text-style.enum";
 import CommentOptionsEnum from "../../../../constants/enum/comments-options-enum";
 
 import type { TextStyleModel } from "../../../../interfaces/models/text-style-model";
+import type { EditCommentModel } from "../../../../interfaces/models/edit-comment-model";
 import type { CommentOptionModel } from "../../../../interfaces/models/comments-option-model";
 
 import TextInput from "../../../text-input";
 
 import { CommentDate, CommentText, Container, ProfilePicture, TextStyleOption, UserName } from "./styles";
-import type { EditCommentModel } from "../../../../interfaces/models/edit-comment-model";
 
 interface Props {
     user: UserEntity,
@@ -32,7 +33,7 @@ const Comment = (props: Props) => {
     const [commentState, setCommentState] = useState<CommentEntity>(props.comment);
     const [showReplies, setShowReplies] = useState(false);
 
-    // Used to update comments after editting
+    // Used to update comments after editing
     useEffect(() => {
         setCommentState(props.comment);
     }, [comment]);
@@ -41,6 +42,7 @@ const Comment = (props: Props) => {
         {
             title: `Curtidas (${commentState.numberOfLikes})`,
             type: CommentOptionsEnum.LIKE,
+            isActive: (user.role == UserRoleEnum.STANDARD) ? true : false,
             action: () => setCommentState((prevState) => ({
                 ...prevState,
                 numberOfLikes: (commentState.numberOfLikes > props.comment.numberOfLikes)
@@ -51,6 +53,7 @@ const Comment = (props: Props) => {
         {
             title: `Respostas (${commentState.numberOfReplies})`,
             type: CommentOptionsEnum.REPLIES,
+            isActive: true,
             action: () => setShowReplies(!showReplies)
         }
     ];
@@ -99,9 +102,25 @@ const Comment = (props: Props) => {
         );
     }
 
+    // Retaled to editing comment
+
+    const [commentChanged, setCommentChanged] = useState(false);
+
+    useEffect(() => editedComment.trim() != ''
+        ? setCommentChanged(true)
+        : setCommentChanged(false), [editedComment]
+    );
+
     const handleEditComment = () => {
-        callBack({ comment: comment, editedComment: editedComment })
+        callBack({ comment: comment, editedComment: editedComment });
         setIsEditing(false);
+        setTextStyle([]);
+    }
+
+    const handleCancelEditing = () => {
+        setEditedComment(comment.text);
+        setIsEditing(false);
+        setTextStyle([]);
     }
 
     return (
@@ -114,10 +133,10 @@ const Comment = (props: Props) => {
                         onClick={() => { }}
                         justifyContent={'flex-start'}
                     >
-                        <ProfilePicture src={props.user.picture.src} />
-                        <UserName color={c_grey_six}>{props.user.name}</UserName>
+                        <ProfilePicture src={comment.athor.picture.src} />
+                        <UserName color={c_grey_six}>{comment.athor.name}</UserName>
                     </Row>
-                    <CommentDate color={c_grey_six}>{props.comment.date}</CommentDate>
+                    <CommentDate color={c_grey_six}>{comment.date}</CommentDate>
                 </Row>
                 {(isEditing)
                     ? <TextInput
@@ -147,12 +166,16 @@ const Comment = (props: Props) => {
                         : <Row gap="10px">
                             {commentOptions.map((item) =>
                                 <TextButton
-                                    text={item.title}
                                     fontSize="12px"
+                                    text={item.title}
+                                    inActive={item.isActive}
                                     color={(item.type == commentOptionState)
                                         ? c_dark_blue : c_grey_six
                                     }
-                                    onClick={() => handleQuestionOption(item)}
+                                    onClick={() => (item.isActive)
+                                        ? handleQuestionOption(item)
+                                        : null
+                                    }
                                 />
                             )}
                         </Row>
@@ -163,23 +186,38 @@ const Comment = (props: Props) => {
                                 fontSize="12px"
                                 text={'Cancelar'}
                                 color={c_dark_red}
-                                onClick={() => setIsEditing(false)}
+                                onClick={handleCancelEditing}
                             />
                             <TextButton
                                 fontSize="12px"
                                 text={'Salvar'}
                                 color={c_grey_six}
-                                onClick={handleEditComment}
+                                inActive={commentChanged}
+                                onClick={(commentChanged) ? handleEditComment : () => { }}
                             />
                         </Row>
-                        : <TextButton
-                            fontSize="12px"
-                            color={c_grey_six}
-                            text={commentState.athor.uid == user.uid ? 'Editar' : 'Reportar'}
-                            onClick={() => commentState.athor.uid == user.uid
-                                ? setIsEditing(!isEditing) : null
+                        : <Row gap="10px">
+                            {commentState.athor.uid == user.uid || user.role == UserRoleEnum.ADMIN
+                                ? <TextButton
+                                    fontSize="12px"
+                                    text={'Remover'}
+                                    color={c_dark_red}
+                                    onClick={() => { }}
+                                />
+                                : null
                             }
-                        />
+                            {user.role == UserRoleEnum.STANDARD
+                                ? <TextButton
+                                    fontSize="12px"
+                                    color={c_grey_six}
+                                    text={commentState.athor.uid == user.uid ? 'Editar' : 'Reportar'}
+                                    onClick={() => commentState.athor.uid == user.uid
+                                        ? setIsEditing(!isEditing) : null
+                                    }
+                                />
+                                : null
+                            }
+                        </Row>
                     }
                 </Row>
             </Container>

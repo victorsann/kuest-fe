@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { c_dark_blue, c_dark_red, c_grey_six, c_white } from "../../../../constants/colors";
 
 import TextInput from "../../../text-input";
@@ -9,6 +9,7 @@ import type { UserEntity } from "../../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../../interfaces/entities/comment-entity";
 
 import TextSyleEnum from "../../../../constants/enum/text-style.enum";
+import UserRoleEnum from "../../../../constants/enum/user-role.enum";
 
 import type { TextStyleModel } from "../../../../interfaces/models/text-style-model";
 import type { CommentReplyEntity } from "../../../../interfaces/entities/comment-reply-entity";
@@ -56,6 +57,15 @@ const CommentReply = (props: Props) => {
         );
     }
 
+    // Retaled to editing comment
+
+    const [replyChanged, setReplyChanged] = useState(false);
+
+    useEffect(() => editedReply.trim() != ''
+        ? setReplyChanged(true)
+        : setReplyChanged(false), [editedReply]
+    );
+
     const handleEditReply = () => {
 
         const index = comment.replies.indexOf(reply);
@@ -72,6 +82,13 @@ const CommentReply = (props: Props) => {
         }));
 
         setIsEditing(false);
+        setTextStyle([]);
+    }
+
+    const handleCancelEditing = () => {
+        setEditedReply(comment.text);
+        setIsEditing(false);
+        setTextStyle([]);
     }
 
     return (
@@ -83,7 +100,7 @@ const CommentReply = (props: Props) => {
                     onClick={() => { }}
                     justifyContent={'space-between'}
                 >
-                    <ProfilePicture src={props.user.picture.src} />
+                    <ProfilePicture src={reply.athor.picture.src} />
                     <UserName color={c_grey_six}>{reply.athor.name}</UserName>
                 </Row>
                 <CommentDate color={c_grey_six}>{reply.date}</CommentDate>
@@ -121,21 +138,38 @@ const CommentReply = (props: Props) => {
                             fontSize="12px"
                             text={'Cancelar'}
                             color={c_dark_red}
-                            onClick={() => setIsEditing(false)}
+                            onClick={handleCancelEditing}
                         />
                         <TextButton
                             fontSize="12px"
                             text={'Salvar'}
                             color={c_grey_six}
-                            onClick={handleEditReply}
+                            inActive={replyChanged}
+                            onClick={(replyChanged) ? handleEditReply : () => { }}
                         />
                     </Row>
-                    : <TextButton
-                        fontSize="12px"
-                        color={c_grey_six}
-                        text={reply.athor.uid == user.uid ? 'Editar' : 'Reportar'}
-                        onClick={() => reply.athor.uid == user.uid ? setIsEditing(!isEditing) : null}
-                    />
+                    : <Row gap="10px">
+                        {reply.athor.uid == user.uid || user.role == UserRoleEnum.ADMIN
+                            ? <TextButton
+                                fontSize="12px"
+                                text={'Remover'}
+                                color={c_dark_red}
+                                onClick={() => { }}
+                            />
+                            : null
+                        }
+                        {user.role == UserRoleEnum.STANDARD
+                            ? <TextButton
+                                fontSize="12px"
+                                color={c_grey_six}
+                                text={reply.athor.uid == user.uid ? 'Editar' : 'Reportar'}
+                                onClick={() => reply.athor.uid == user.uid
+                                    ? setIsEditing(!isEditing) : null
+                                }
+                            />
+                            : null
+                        }
+                    </Row>
                 }
             </Row>
         </ReplyContainer>

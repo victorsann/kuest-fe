@@ -6,6 +6,7 @@ import CommentInput from "../comment-input";
 import CommentReply from "../comment-reply";
 
 import { Container } from "./styles";
+import UserRoleEnum from "../../../../constants/enum/user-role.enum";
 
 interface Props {
     user: UserEntity,
@@ -15,7 +16,7 @@ interface Props {
 
 const CommentReplies = (props: Props) => {
 
-    const { comment, setCommentState, user } = props;
+    const { user, comment, setCommentState } = props;
 
     const handleSetNewReply = (reply: string) => {
         const newReply: CommentReplyEntity = {
@@ -40,7 +41,13 @@ const CommentReplies = (props: Props) => {
                     setCommentState={setCommentState}
                 />
             ))}
-            <CommentInput user={user} callBack={(_reply) => handleSetNewReply(_reply)} />
+            {(user.role == UserRoleEnum.STANDARD)
+                ? <CommentInput
+                    user={user}
+                    callBack={(_reply) => handleSetNewReply(_reply)}
+                />
+                : null
+            }
         </Container>
     );
 }

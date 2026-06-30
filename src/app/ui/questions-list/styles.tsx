@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { medium } from "../../constants/font-weight";
 
 export const Container = styled.div`
     display: flex;
@@ -14,5 +15,21 @@ export const ListContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
+    justify-content: center;
     gap: 30px;
+    min-height: 50vh;
+`;
+
+export const Length = styled.div<{ color?: string }>`
+    font-size: 15px;
+    font-weight: ${medium};
+    color: ${(props) => props.color}
+`;
+
+export const NoResultsFound = styled.text<{ color?: string }>`
+    display: flex;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: ${medium};
+    color: ${(props) => props.color}
 `;

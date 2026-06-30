@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const Container = styled.div<{ backgroundColor?: string }>`
-    display: grid;
     gap: 20px;
     border-radius: 5px;
     padding-left: 10%;
@@ -9,10 +8,11 @@ export const Container = styled.div<{ backgroundColor?: string }>`
 `;
 
 export const ReplyContainer = styled.div<{ backgroundColor?: string }>`
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
-    border-radius: 5px;
     padding: 20px;
+    border-radius: 5px;
     background-color: ${(props) => props.backgroundColor};
 `;
 
@@ -36,7 +36,6 @@ export const CommentDate = styled.text<{ color?: string }>`
 export const CommentText = styled.text<{ color?: string }>`
     display: flex;
     align-items: center;
-    height: 20px;
     font-size: 13px;
     padding-left: 2px;
     color: ${(props) => props.color};
