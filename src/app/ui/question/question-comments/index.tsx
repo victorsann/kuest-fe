@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
 import { c_grey_two } from "../../../constants/colors";
 
+import UserRoleEnum from "../../../constants/enum/user-role.enum";
+import QuestionFieldsEnum from "../../../constants/enum/question-fields-enum";
 import type QuestionActionsEnum from "../../../constants/enum/question-options.enum";
+
 import type { EditQuestionModel } from "../../../interfaces/models/endit-question-model";
 
 import type { UserEntity } from "../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../interfaces/entities/comment-entity";
-import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
 import type { EditCommentModel } from "../../../interfaces/models/edit-comment-model";
 
 import CommentInput from "./comment-input";
 import CommentsList from "./comments-list";
 
 import { Container } from "./styles";
-import UserRoleEnum from "../../../constants/enum/user-role.enum";
 
 interface Props {
     user: UserEntity,
-    question: QuestionEntity,
     questionCallBack: (params: EditQuestionModel) => void
     setQuestionActionState: React.Dispatch<React.SetStateAction<QuestionActionsEnum>>
 }
 
 const QuestionComments = (props: Props) => {
 
-    const { user, question, questionCallBack } = props;
+    const { user, questionCallBack } = props;
 
     const [comments, setComments] = useState<Array<CommentEntity>>([]);
 
@@ -76,7 +76,7 @@ const QuestionComments = (props: Props) => {
             replies: [],
         }
         setComments([...comments, newComment]);
-        questionCallBack({ question: question }); // update question
+        questionCallBack({ field: QuestionFieldsEnum.NUMBER_OF_COMMENTS }); // update question
     }
 
     const handleEditComment = (params: EditCommentModel) => {

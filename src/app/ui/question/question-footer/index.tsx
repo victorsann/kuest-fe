@@ -87,7 +87,6 @@ const QuestionFooter = (props: Props) => {
             {(questionOptionState == QuestionOptionsEnum.COMMENTS)
                 ? <QuestionComments
                     user={user}
-                    question={question}
                     questionCallBack={questionCallBack}
                     setQuestionActionState={setQuestionOptionState}
                 />
@@ -95,6 +94,7 @@ const QuestionFooter = (props: Props) => {
             }
             {(questionOptionState == QuestionOptionsEnum.ANSWER)
                 ? <QuestionAnswer
+                    user={user}
                     question={question}
                     setQuestionActionState={setQuestionOptionState}
                 />

@@ -15,8 +15,6 @@ import FilterSvg from "../../../assets/svg/icons/filter";
 import type { UserEntity } from "../../interfaces/entities/user-entity";
 import type { QuestionEntity } from "../../interfaces/entities/question-entity";
 
-import type { EditQuestionModel } from "../../interfaces/models/endit-question-model";
-
 import UserRoleEnum from "../../constants/enum/user-role.enum";
 import QuestionTypeEnum from "../../constants/enum/question-type.enum";
 import QuestionAnswerKeyEnum from "../../constants/enum/question-answer-key.enum";
@@ -97,15 +95,6 @@ const QuestionsPage = () => {
         ]);
     }
 
-    const handleUpdateQuetion = (params: EditQuestionModel) => {
-        const index = questions.indexOf(params.question);
-        const editedQuestion: QuestionEntity = {
-            ...params.question,
-            numberOfComments: params.question.numberOfComments + 1
-        }
-        setQuestions(questions.with(index, editedQuestion));
-    }
-
     return (
         <>
             <TitleSection>
@@ -140,7 +129,6 @@ const QuestionsPage = () => {
             <QuestionsList
                 user={user}
                 questions={questions}
-                questionCallBack={handleUpdateQuetion}
             />
         </>
     );

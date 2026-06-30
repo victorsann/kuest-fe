@@ -1,24 +1,22 @@
-
 import SectionTitle from "../section-title";
 
 import Question from "../question";
+
+import { c_dark_blue, c_grey_six } from "../../constants/colors";
+
 import type { UserEntity } from "../../interfaces/entities/user-entity";
 import type { QuestionEntity } from "../../interfaces/entities/question-entity";
 
-import type { EditQuestionModel } from "../../interfaces/models/endit-question-model";
-
 import { Container, Length, ListContainer, NoResultsFound } from "./styles";
-import { c_dark_blue, c_grey_six } from "../../constants/colors";
 
 interface Props {
     user: UserEntity,
-    questions: Array<QuestionEntity>,
-    questionCallBack: (params: EditQuestionModel) => void
+    questions: Array<QuestionEntity>
 }
 
 const QuestionsList = (props: Props) => {
 
-    const { user, questions, questionCallBack } = props;
+    const { user, questions } = props;
 
     return (
         <Container>
@@ -32,11 +30,7 @@ const QuestionsList = (props: Props) => {
             <ListContainer>
                 {(questions.length > 0)
                     ? questions.map(
-                        (item) => <Question
-                            user={user}
-                            question={item}
-                            questionCallBack={questionCallBack}
-                        />
+                        (item) => <Question user={user} question={item} />
                     )
                     : <NoResultsFound color={c_grey_six}>
                         Nenhuma questão encontrada

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { c_dark_blue, c_dark_red, c_grey_six, c_white } from "../../../../constants/colors";
 
+import TextInput from "../../../text-input";
 import CommentReplies from "../comment-replies";
 import Row from "../../../../components/row_styles";
 import TextButton from "../../../button/text-button";
@@ -15,8 +16,6 @@ import CommentOptionsEnum from "../../../../constants/enum/comments-options-enum
 import type { TextStyleModel } from "../../../../interfaces/models/text-style-model";
 import type { EditCommentModel } from "../../../../interfaces/models/edit-comment-model";
 import type { CommentOptionModel } from "../../../../interfaces/models/comments-option-model";
-
-import TextInput from "../../../text-input";
 
 import { CommentDate, CommentText, Container, ProfilePicture, TextStyleOption, UserName } from "./styles";
 
@@ -34,6 +33,7 @@ const Comment = (props: Props) => {
     const [showReplies, setShowReplies] = useState(false);
 
     // Used to update comments after editing
+
     useEffect(() => {
         setCommentState(props.comment);
     }, [comment]);
@@ -70,10 +70,28 @@ const Comment = (props: Props) => {
         item.action();
     }
 
-    // Editing related
+    // Retaled to editing comment
 
     const [isEditing, setIsEditing] = useState(false);
+    const [commentChanged, setCommentChanged] = useState(false);
     const [editedComment, setEditedComment] = useState(commentState.text);
+
+    useEffect(() => editedComment.trim() != ''
+        ? setCommentChanged(true)
+        : setCommentChanged(false), [editedComment]
+    );
+
+    const handleEditComment = () => {
+        callBack({ comment: comment, editedComment: editedComment });
+        setIsEditing(false);
+        setTextStyle([]);
+    }
+
+    const handleCancelEditing = () => {
+        setEditedComment(comment.text);
+        setIsEditing(false);
+        setTextStyle([]);
+    }
 
     const [textStyle, setTextStyle] = useState<Array<TextSyleEnum>>([]);
 
@@ -100,27 +118,6 @@ const Comment = (props: Props) => {
             ? textStyle.filter(value => value != style)
             : [...textStyle, style]
         );
-    }
-
-    // Retaled to editing comment
-
-    const [commentChanged, setCommentChanged] = useState(false);
-
-    useEffect(() => editedComment.trim() != ''
-        ? setCommentChanged(true)
-        : setCommentChanged(false), [editedComment]
-    );
-
-    const handleEditComment = () => {
-        callBack({ comment: comment, editedComment: editedComment });
-        setIsEditing(false);
-        setTextStyle([]);
-    }
-
-    const handleCancelEditing = () => {
-        setEditedComment(comment.text);
-        setIsEditing(false);
-        setTextStyle([]);
     }
 
     return (

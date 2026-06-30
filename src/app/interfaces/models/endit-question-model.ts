@@ -1,5 +1,6 @@
-import type { QuestionEntity } from "../entities/question-entity";
+import type QuestionFieldsEnum from "../../constants/enum/question-fields-enum";
 
 export interface EditQuestionModel {
-    question: QuestionEntity
+    field: QuestionFieldsEnum,
+    metadata?: any
 }

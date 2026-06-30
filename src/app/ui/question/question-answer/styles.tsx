@@ -13,7 +13,6 @@ export const Container = styled.div<{ backgroundColor?: string }>`
 export const AnswerContainer = styled.div<{ backgroundColor?: string }>`
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 12px;
     padding: 20px;
     border-radius: 5px;
@@ -29,7 +28,7 @@ export const AnswerKey = styled.text<{ color?: string }>`
 
 export const Reason = styled.text<{ color?: string }>`
     font-size: 13px;
-    padding-left: 2px;
+    padding: 2px;
     text-align: justify;
     color: ${(props) => props.color};
 `;
