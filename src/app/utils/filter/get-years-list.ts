@@ -1,4 +1,4 @@
-import type { SelectItemModel } from "../interfaces/models/select-item-model";
+import type { SelectItemModel } from "../../interfaces/models/select-item-model";
 
 export default function getYearsList(range: number): Array<SelectItemModel> {
     const currentYear: number = new Date().getFullYear();

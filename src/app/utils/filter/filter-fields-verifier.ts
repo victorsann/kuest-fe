@@ -1,4 +1,4 @@
-export function filterFieldsVerifier(value: unknown): boolean {
+function filterFieldsVerifier(value: unknown): boolean {
     if (value == null) {
         return false; // null or undefined
     }
@@ -13,3 +13,5 @@ export function filterFieldsVerifier(value: unknown): boolean {
 
     return true;
 }
+
+export default filterFieldsVerifier;

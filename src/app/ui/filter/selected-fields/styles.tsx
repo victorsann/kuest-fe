@@ -40,7 +40,7 @@ export const Remover = styled.div`
 `;
 
 export const Key = styled.text<{ color?: string }>`
-    font-size: 14px;
+    font-size: 12px;
     color: ${(props) => props.color}
 `;
 

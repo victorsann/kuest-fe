@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { medium } from "../../constants/font-weight";
+import { c_grey_two } from "../../constants/colors";
 
 export const Container = styled.div`
     display: flex;
@@ -9,6 +10,7 @@ export const Container = styled.div`
     padding-bottom: 30px;
     padding-inline-end: 15%;
     padding-inline-start: 15%;
+    border-top: 2px solid ${c_grey_two};
     @media screen and (max-width: 800px) {
        padding-inline-end: 10%;
        padding-inline-start: 10%;

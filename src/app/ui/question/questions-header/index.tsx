@@ -42,7 +42,7 @@ const QuestionHeader = (props: Props) => {
                         fontSize="12px"
                         onClick={() => { }}
                         color={c_dark_blue}
-                        text={question.subject.title}
+                        text={question.subject.label}
                     />
                 </Row>
                 <Row gap="2px">
@@ -51,7 +51,7 @@ const QuestionHeader = (props: Props) => {
                         fontSize="12px"
                         onClick={() => { }}
                         color={c_dark_blue}
-                        text={question.topic.title}
+                        text={question.topic.label}
                     />
                 </Row>
             </MetaDataContainer>

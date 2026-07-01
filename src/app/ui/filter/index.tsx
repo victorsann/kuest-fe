@@ -6,6 +6,7 @@ import Row from "../../components/row_styles";
 import SquareButton from "../button/square-button";
 
 import Select from "../select";
+import SelectedFilter from "./selected-fields";
 
 import { c_dark_blue, c_grey_six, c_grey_two, c_white } from "../../constants/colors";
 
@@ -15,7 +16,11 @@ import type { BoardEntity } from "../../interfaces/entities/board-entity";
 import type { RoleEntity } from "../../interfaces/entities/role-entity";
 import type { ExamEntity } from "../../interfaces/entities/exam-entity";
 
-import getYearsList from "../../utils/get-years-list";
+import getYearsList from "../../utils/filter/get-years-list";
+import formatValue from "../../utils/filter/format-value";
+import emptyForm from "../../utils/filter/empty-form";
+import listingOptions from "../../utils/filter/listing-options";
+import exceptionOptions from "../../utils/filter/exception-options";
 
 import type { FilterFormState } from "../../interfaces/states/filter-form-state";
 
@@ -23,7 +28,6 @@ import { ListingOptionsEnum } from "../../constants/enum/filter/listing-options.
 import { ExceptionOptionsEnum } from "../../constants/enum/filter/exception-options.enum";
 
 import { CheckBox, Col, Container, Label, Section } from "./styles";
-import SelectedFilter from "./selected-fields";
 
 const Filter = () => {
 
@@ -47,27 +51,14 @@ const Filter = () => {
         setYears(getYearsList(30));
     }
 
-    const listingOptions = [ListingOptionsEnum.ALL, ListingOptionsEnum.SOLVED, ListingOptionsEnum.RIGHT, ListingOptionsEnum.WRONG];
-    const exceptionOptions = [ExceptionOptionsEnum.ANNULLED, ExceptionOptionsEnum.OUTDATED];
-
     // Related to form state
     useEffect(() => {
         handleLoadFormFields();
     }, []);
 
-    const [formState, setFormState] = useState<FilterFormState>({
-        keyWord: '',
-        subjects: [],
-        topics: [],
-        boards: [],
-        roles: [],
-        exams: [],
-        years: [],
-        exceptions: [],
-        listOption: ListingOptionsEnum.ALL
-    });
+    const [formState, setFormState] = useState<FilterFormState>(emptyForm);
 
-    const handleClearFilter = () => setFormState({ keyWord: '', subjects: [], topics: [], boards: [], roles: [], exams: [], years: [], exceptions: [], listOption: ListingOptionsEnum.ALL });
+    const handleClearFilter = () => setFormState(emptyForm);
 
     return (
         <Container backgroundColor={c_grey_two}>
@@ -159,15 +150,7 @@ const Filter = () => {
                             <Row gap="10px">
                                 {listingOptions.map((item) =>
                                     <SquareButton
-                                        text={
-                                            item == ListingOptionsEnum.ALL
-                                                ? 'Todas'
-                                                : item == ListingOptionsEnum.SOLVED
-                                                    ? 'Resolvidas'
-                                                    : item == ListingOptionsEnum.RIGHT
-                                                        ? 'Acertos'
-                                                        : 'Erros'
-                                        }
+                                        text={formatValue(item)}
                                         isActive={true}
                                         backgroundColor={'transparent'}
                                         color={(formState.listOption == item) ? c_dark_blue : c_grey_six}

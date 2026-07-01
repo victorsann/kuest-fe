@@ -9,6 +9,8 @@ import TextButton from "../../../button/text-button";
 import type { UserEntity } from "../../../../interfaces/entities/user-entity";
 import type { CommentEntity } from "../../../../interfaces/entities/comment-entity";
 
+import { formatDate } from "../../../../utils/format-date";
+
 import UserRoleEnum from "../../../../constants/enum/user-role.enum";
 import TextSyleEnum from "../../../../constants/enum/text-style.enum";
 import CommentOptionsEnum from "../../../../constants/enum/comments-options-enum";
@@ -133,7 +135,7 @@ const Comment = (props: Props) => {
                         <ProfilePicture src={comment.athor.picture.src} />
                         <UserName color={c_grey_six}>{comment.athor.name}</UserName>
                     </Row>
-                    <CommentDate color={c_grey_six}>{comment.date}</CommentDate>
+                    <CommentDate color={c_grey_six}>{formatDate(comment.date)}</CommentDate>
                 </Row>
                 {(isEditing)
                     ? <TextInput

@@ -11,6 +11,8 @@ import type { CommentEntity } from "../../../../interfaces/entities/comment-enti
 import TextSyleEnum from "../../../../constants/enum/text-style.enum";
 import UserRoleEnum from "../../../../constants/enum/user-role.enum";
 
+import { formatDate } from "../../../../utils/format-date";
+
 import type { TextStyleModel } from "../../../../interfaces/models/text-style-model";
 import type { CommentReplyEntity } from "../../../../interfaces/entities/comment-reply-entity";
 
@@ -103,7 +105,7 @@ const CommentReply = (props: Props) => {
                     <ProfilePicture src={reply.athor.picture.src} />
                     <UserName color={c_grey_six}>{reply.athor.name}</UserName>
                 </Row>
-                <CommentDate color={c_grey_six}>{reply.date}</CommentDate>
+                <CommentDate color={c_grey_six}>{formatDate(reply.date)}</CommentDate>
             </Row>
             {(isEditing)
                 ? <TextInput

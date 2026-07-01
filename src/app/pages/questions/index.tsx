@@ -95,6 +95,8 @@ const QuestionsPage = () => {
         ]);
     }
 
+    const [expanded, setExpanded] = useState(true);
+
     return (
         <>
             <TitleSection>
@@ -116,21 +118,18 @@ const QuestionsPage = () => {
                             <SquareButton
                                 text="Filtro"
                                 isActive={true}
-                                color={c_grey_six}
-                                onClick={() => { }}
-                                borderColor={c_grey_six}
                                 backgroundColor={'transparent'}
-                                icon={<FilterSvg color={c_grey_six} />}
+                                onClick={() => setExpanded(!expanded)}
+                                color={(expanded) ? c_dark_blue : c_grey_six}
+                                borderColor={(expanded) ? c_dark_blue : c_grey_six}
+                                icon={<FilterSvg color={(expanded) ? c_dark_blue : c_grey_six} />}
                             />
                         </Row>
                     }
                 />
             </TitleSection>
-            <Filter />
-            <QuestionsList
-                user={user}
-                questions={questions}
-            />
+            {expanded && <Filter />}
+            <QuestionsList user={user} questions={questions} />
         </>
     );
 }

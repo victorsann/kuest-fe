@@ -14,7 +14,9 @@ interface Props {
 const PageTitle = (props: Props) => {
     return (
         <Column gap="20px">
-            <Row><Title color={c_grey_six}>{props.title}</Title>{props.buttons}</Row>
+            <Row>
+                <Title color={c_grey_six}>{props.title}</Title>{props.buttons}
+            </Row>
             <Subtitle color={c_grey_six}>{props.subtitle}</Subtitle>
         </Column>
     );
