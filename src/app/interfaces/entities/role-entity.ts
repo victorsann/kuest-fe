@@ -1,4 +1,4 @@
-export interface SubjectEntity {
+export interface RoleEntity {
     value: string;
     label: string;
 }

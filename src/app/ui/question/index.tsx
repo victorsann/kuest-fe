@@ -36,7 +36,7 @@ const Question = (props: Props) => {
     }
 
     return (
-        <Container style={{ overflow: "hidden" }}>
+        <Container>
             <QuestionHeader question={question} />
             <QuestionBody question={question} />
             <QuestionFooter

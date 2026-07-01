@@ -60,12 +60,12 @@ const QuestionsPage = () => {
                 question_type: QuestionTypeEnum.MULTIPLE_CHOICE,
                 numberOfComments: 1,
                 subject: {
-                    id: '1',
-                    title: 'Matemática'
+                    value: '1',
+                    label: 'Matemática'
                 },
                 topic: {
-                    id: '1',
-                    title: 'Porcentagem'
+                    value: '1',
+                    label: 'Porcentagem'
                 }
             },
             {
@@ -84,12 +84,12 @@ const QuestionsPage = () => {
                 question_type: QuestionTypeEnum.TRUE_OR_FALSE,
                 numberOfComments: 1,
                 subject: {
-                    id: '2',
-                    title: 'Informática'
+                    value: '2',
+                    label: 'Informática'
                 },
                 topic: {
-                    id: '1',
-                    title: 'Segurança da Informação'
+                    value: '1',
+                    label: 'Segurança da Informação'
                 }
             },
         ]);
@@ -102,15 +102,16 @@ const QuestionsPage = () => {
                     title="Questões"
                     buttons={
                         <Row gap="10px">
-                            {(user.role == UserRoleEnum.ADMIN) ?
-                                <SquareButton
+                            {(user.role == UserRoleEnum.ADMIN)
+                                ? <SquareButton
                                     text="Criar"
                                     isActive={true}
                                     color={c_white}
                                     onClick={() => { }}
                                     backgroundColor={c_dark_blue}
                                     icon={<PlusSvg color={c_white} />}
-                                /> : null
+                                />
+                                : null
                             }
                             <SquareButton
                                 text="Filtro"

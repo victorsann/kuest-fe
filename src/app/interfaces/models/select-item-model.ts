@@ -1,4 +1,4 @@
-export interface SubjectEntity {
+export interface SelectItemModel {
     value: string;
     label: string;
 }

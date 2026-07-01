@@ -4,7 +4,7 @@ interface Props {
     color?: string;
 }
 
-const ActivitySvg = (props: Props) => (
+const ChevroDownSvg = (props: Props) => (
     <svg
         width={24}
         height={24}
@@ -16,9 +16,9 @@ const ActivitySvg = (props: Props) => (
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M4 11.666h4L10.04 5l4.398 14 1.552-7.334H20"
+            d="m7 10 5 4.58L17 10"
         />
     </svg>
 );
 
-export default ActivitySvg;
+export default ChevroDownSvg;

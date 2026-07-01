@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const Input = styled.textarea<{ color?: string }>`
     border: none;
     font-size: 13px;
+    flex: 1;
     font-family: 'Roboto', sans-serif;
     resize: none; 
     overflow-y: auto;

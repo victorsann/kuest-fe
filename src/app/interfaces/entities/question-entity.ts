@@ -1,5 +1,5 @@
 import type QuestionTypeEnum from "../../constants/enum/question-type.enum";
-import type { OptionEntity } from "./option-entity";
+import type { QuestionOptionEntity } from "./question-option-entity";
 import type { QuestionAnswerEntity } from "./question-answer-entity";
 import type { SubjectEntity } from "./subject-entity";
 import type { TopicEntity } from "./topic-entity";
@@ -11,7 +11,7 @@ export interface QuestionEntity {
     examining_board: string,
     statement: string,
     prompt: string,
-    options: Array<OptionEntity>,
+    options: Array<QuestionOptionEntity>,
     answer: QuestionAnswerEntity,
     question_type: QuestionTypeEnum,
     numberOfComments: number,

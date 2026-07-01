@@ -1,4 +1,5 @@
-export interface SubjectEntity {
+export interface BoardEntity {
     value: string;
     label: string;
 }
+

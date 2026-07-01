@@ -4,7 +4,7 @@ import { c_dark_blue, c_grey_six } from "../../../constants/colors";
 
 import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
 
-import { IdContainer, MetaDataContainer, MetaDataTitle } from "./styles";
+import { Container, IdContainer, MetaDataContainer, MetaDataTitle } from "./styles";
 
 interface Props { question: QuestionEntity }
 
@@ -13,18 +13,12 @@ const QuestionHeader = (props: Props) => {
     const { question } = props;
 
     return (
-        <Row>
+        <Container>
             <IdContainer>
-                <DisplayText
-                    fontSize="12px"
-                    onClick={() => { }}
-                    color={c_dark_blue}
-                    text={question.uuid}
-                />
+                <DisplayText fontSize="12px" onClick={() => { }} color={c_dark_blue} text={question.uuid} />
             </IdContainer>
-
             <MetaDataContainer>
-                <Row gap="5px">
+                <Row gap="2px">
                     <MetaDataTitle fontSize="12px" color={c_grey_six}>Banca:</MetaDataTitle>
                     <DisplayText
                         fontSize="12px"
@@ -33,7 +27,7 @@ const QuestionHeader = (props: Props) => {
                         text={question.examining_board}
                     />
                 </Row>
-                <Row gap="5px">
+                <Row gap="2px">
                     <MetaDataTitle fontSize="12px" color={c_grey_six}>Prova:</MetaDataTitle>
                     <DisplayText
                         fontSize="12px"
@@ -42,7 +36,7 @@ const QuestionHeader = (props: Props) => {
                         text={question.exam}
                     />
                 </Row>
-                <Row gap="5px">
+                <Row gap="2px">
                     <MetaDataTitle fontSize="12px" color={c_grey_six}>Matéria:</MetaDataTitle>
                     <DisplayText
                         fontSize="12px"
@@ -51,7 +45,7 @@ const QuestionHeader = (props: Props) => {
                         text={question.subject.title}
                     />
                 </Row>
-                <Row gap="5px">
+                <Row gap="2px">
                     <MetaDataTitle fontSize="12px" color={c_grey_six}>Assunto:</MetaDataTitle>
                     <DisplayText
                         fontSize="12px"
@@ -60,10 +54,8 @@ const QuestionHeader = (props: Props) => {
                         text={question.topic.title}
                     />
                 </Row>
-
-
             </MetaDataContainer>
-        </Row>
+        </Container>
     );
 }
 

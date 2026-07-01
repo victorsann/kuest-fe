@@ -4,7 +4,7 @@ import { c_dark_blue, c_dark_green, c_dark_red, c_grey_six, c_white } from "../.
 
 import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
 import type { QuestionState } from "../../../interfaces/states/question-state";
-import type { OptionEntity } from "../../../interfaces/entities/option-entity";
+import type { QuestionOptionEntity } from "../../../interfaces/entities/question-option-entity";
 
 import QuestionOption from "../question-option";
 import SquareButton from "../../button/square-button";
@@ -28,7 +28,7 @@ const QuestionBody = (props: Props) => {
         answerStatus: { color: '', statement: '', status: AnswerStatusEnum.NONE },
     });
 
-    const trueOrFalse: Array<OptionEntity> = [
+    const trueOrFalse: Array<QuestionOptionEntity> = [
         { key: 'TRUE', statement: 'TRUE' },
         { key: 'FALSE', statement: 'FALSE' },
     ];

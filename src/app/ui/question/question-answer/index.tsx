@@ -14,6 +14,8 @@ import type { UserEntity } from "../../../interfaces/entities/user-entity";
 import type { QuestionEntity } from "../../../interfaces/entities/question-entity";
 
 import { AnswerContainer, AnswerKey, Container, Reason } from "./styles";
+import QuestionTypeEnum from "../../../constants/enum/question-type.enum";
+import QuestionAnswerKeyEnum from "../../../constants/enum/question-answer-key.enum";
 
 interface Props {
     user: UserEntity,
@@ -66,7 +68,13 @@ const QuestionAnswer = (props: Props) => {
         <Container backgroundColor={c_grey_two}>
             <AnswerContainer backgroundColor={c_white}>
                 <AnswerKey color={c_grey_six}>
-                    Gabarito: {question.answer.key}
+                    Gabarito: {
+                        question.question_type == QuestionTypeEnum.TRUE_OR_FALSE
+                            ? question.answer.key == QuestionAnswerKeyEnum.TRUE
+                                ? 'Certo'
+                                : 'Errado'
+                            : question.answer.key
+                    }
                 </AnswerKey>
                 {(isEditing)
                     ? <TextInput

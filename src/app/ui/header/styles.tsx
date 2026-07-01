@@ -12,6 +12,10 @@ export const Container = styled.div`
     height: 60px;
     background-color: ${c_white};
     border-bottom: 1px solid #F3F3F3;
+    @media screen and (max-width: 800px) {
+       padding-inline-end: 10%;
+       padding-inline-start: 10%;
+    }
 `;
 
 

@@ -18,10 +18,9 @@ export const Container = styled.div`
 
 export const NavItem = styled(NavLink) <{ isActive: boolean }>`
   display: flex;
-  gap: 10px;
+  font-size: 15px;
   flex-direction: row;
   text-decoration: none;
-  font-size: 15px;
   font-weight: ${medium};
   color: ${(props) => props.isActive ? c_dark_blue : c_black};
 `;

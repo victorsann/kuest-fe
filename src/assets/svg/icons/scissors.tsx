@@ -1,3 +1,5 @@
+import { c_grey_six } from "../../../app/constants/colors";
+
 interface Props {
     color?: string;
 }
@@ -12,7 +14,7 @@ const ScissorsSvg = (props: Props) => (
     >
         <g clipPath="url(#a)">
             <path
-                stroke={(props.color) ?? "#000"}
+                stroke={(props.color) ?? c_grey_six}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
@@ -25,5 +27,6 @@ const ScissorsSvg = (props: Props) => (
             </clipPath>
         </defs>
     </svg>
-)
-export default ScissorsSvg
+);
+
+export default ScissorsSvg;

@@ -7,7 +7,7 @@ import QuestionAnswerKeyEnum from "../../../constants/enum/question-answer-key.e
 import ScissorsSvg from "../../../../assets/svg/icons/scissors";
 
 import type { OptionState } from "../../../interfaces/states/options-state";
-import type { OptionEntity } from "../../../interfaces/entities/option-entity";
+import type { QuestionOptionEntity } from "../../../interfaces/entities/question-option-entity";
 
 import type { QuestionState } from "../../../interfaces/states/question-state";
 
@@ -15,7 +15,7 @@ import { c_dark_green, c_grey_four, c_grey_six, c_grey_three, c_white } from "..
 import { AnswerCheckBox, AnswerKey, OptionContainer, OptionRemoved, OptionRemover, OptionRow, OptionStatement, RightAnswer } from "./styles";
 
 interface Props {
-    option: OptionEntity,
+    option: QuestionOptionEntity,
     questionState: QuestionState,
     setQuestionState: React.Dispatch<React.SetStateAction<QuestionState>>
 }
